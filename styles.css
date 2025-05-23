@@ -1,0 +1,834 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, #8A2387 0%, #E94057 50%, #F27121 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    direction: rtl;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* عناصر الخلفية */
+.bg-element {
+    position: fixed;
+    z-index: 0;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.balloon {
+    width: 40px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    position: absolute;
+    animation: float-balloon 15s ease-in-out infinite;
+}
+
+.balloon::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.7);
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.balloon.red { background-color: rgba(255, 100, 100, 0.7); }
+.balloon.blue { background-color: rgba(100, 100, 255, 0.7); }
+.balloon.yellow { background-color: rgba(255, 255, 100, 0.7); }
+.balloon.green { background-color: rgba(100, 255, 100, 0.7); }
+
+.cake {
+    width: 80px;
+    height: 60px;
+    background-color: rgba(255, 200, 200, 0.7);
+    border-radius: 10px;
+    position: absolute;
+    animation: rotate 20s linear infinite;
+}
+
+.cake::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    background-color: rgba(255, 255, 0, 0.7);
+    top: -20px;
+    left: 35px;
+    border-radius: 5px 5px 0 0;
+}
+
+.gift {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(200, 200, 255, 0.7);
+    position: absolute;
+    animation: pulse-gift 5s ease-in-out infinite;
+}
+
+.gift::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 50px;
+    background-color: rgba(255, 100, 100, 0.7);
+    top: 0;
+    left: 20px;
+}
+
+.gift::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 10px;
+    background-color: rgba(255, 100, 100, 0.7);
+    top: 20px;
+    left: 0;
+}
+
+.gift.blue::after, .gift.blue::before {
+    background-color: rgba(100, 100, 255, 0.7);
+}
+
+.gift.green::after, .gift.green::before {
+    background-color: rgba(100, 255, 100, 0.7);
+}
+
+.star {
+    width: 0;
+    height: 0;
+    border-right: 15px solid transparent;
+    border-bottom: 10px solid rgba(255, 255, 100, 0.7);
+    border-left: 15px solid transparent;
+    transform: rotate(35deg);
+    position: absolute;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+.star:before {
+    border-bottom: 10px solid rgba(255, 255, 100, 0.7);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -6px;
+    left: -10px;
+    content: '';
+    transform: rotate(-35deg);
+}
+
+.star:after {
+    position: absolute;
+    top: 0;
+    left: -15px;
+    border-right: 15px solid transparent;
+    border-bottom: 10px solid rgba(255, 255, 100, 0.7);
+    border-left: 15px solid transparent;
+    transform: rotate(-70deg);
+    content: '';
+}
+
+.candle {
+    width: 10px;
+    height: 30px;
+    background: linear-gradient(to bottom, #ff9a9e 0%, #fad0c4 100%);
+    position: absolute;
+    border-radius: 5px 5px 0 0;
+    animation: float-candle 4s ease-in-out infinite;
+}
+
+.candle::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #ffdd00 0%, #ff9500 100%);
+    border-radius: 50%;
+    top: -10px;
+    left: 0;
+    filter: blur(2px);
+    animation: flicker 1s ease-in-out infinite;
+}
+
+.ribbon {
+    width: 60px;
+    height: 15px;
+    background-color: rgba(255, 100, 150, 0.7);
+    position: absolute;
+    transform: rotate(45deg);
+    animation: wave 6s ease-in-out infinite;
+}
+
+.ribbon::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 15px;
+    background-color: rgba(255, 100, 150, 0.7);
+    transform: rotate(90deg);
+    left: 22.5px;
+    top: -22.5px;
+}
+
+.confetti-bg {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    animation: fall 10s linear infinite;
+}
+
+/* كروت عيد الميلاد */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 320px;
+    height: 420px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    position: relative;
+    animation: float 4s ease-in-out infinite;
+    transform-style: preserve-3d;
+    backdrop-filter: blur(5px);
+    margin: 0;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: block;
+}
+
+.card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.card-top {
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-1 .card-top {
+    height: 60%;
+    background: linear-gradient(45deg, #5614B0 0%, #DBD65C 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-1 .card-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('confetti-bg.png');
+    opacity: 0.2;
+    animation: slide 20s linear infinite;
+}
+
+.number {
+    font-size: 120px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 15px rgba(0,0,0,0.3), 0 0 30px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.card-1 .card-bottom {
+    background: linear-gradient(to bottom, #ffffff 0%, #f3f3f3 100%);
+    padding: 30px 20px;
+    text-align: center;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-1 .card-bottom::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+    top: -100px;
+    right: -100px;
+    opacity: 0.6;
+}
+
+.card-1 h1 {
+    color: #5614B0;
+    margin-bottom: 15px;
+    font-size: 32px;
+    font-weight: bold;
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-1 p {
+    color: #444;
+    font-size: 20px;
+    line-height: 1.6;
+    margin: 0;
+    position: relative;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-image {
+    transform: scale(1.1);
+}
+
+.sparkle {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0;
+    animation: sparkle 2s linear infinite;
+}
+
+.confetti {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: -10px;
+    animation: confetti 5s ease-in-out infinite;
+}
+
+.card-bottom {
+    padding: 25px;
+    text-align: center;
+    background: linear-gradient(to bottom, #ffffff 0%, #f3f3f3 100%);
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+p {
+    color: #444;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+    50% { transform: translateY(-15px) rotate(var(--rotate, 0deg)); }
+    100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); text-shadow: 4px 4px 15px rgba(0,0,0,0.4); }
+    50% { transform: scale(1.1); text-shadow: 6px 6px 20px rgba(0,0,0,0.6); }
+    100% { transform: scale(1); text-shadow: 4px 4px 15px rgba(0,0,0,0.4); }
+}
+
+@keyframes confetti {
+    0% { transform: translateY(0) rotateX(0) rotateY(0); }
+    100% { transform: translateY(1000%) rotateX(360deg) rotateY(360deg); }
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes float-balloon {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-100px) translateX(30px); }
+    100% { transform: translateY(0) translateX(0); }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-gift {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+@keyframes float-candle {
+    0% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+    100% { transform: translateY(0) rotate(-2deg); }
+}
+
+@keyframes flicker {
+    0% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0.8; transform: scale(1); }
+}
+
+@keyframes wave {
+    0% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(-20px); }
+    100% { transform: rotate(45deg) translateY(0); }
+}
+
+@keyframes fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(1000px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes slide {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); text-shadow: 0 0 15px rgba(0,0,0,0.3); }
+    50% { transform: scale(1.1); text-shadow: 0 0 30px rgba(0,0,0,0.5); }
+    100% { transform: scale(1); text-shadow: 0 0 15px rgba(0,0,0,0.3); }
+}
+
+/* تأثيرات إضافية للكارت الأول */
+.light-effect {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: light-pulse 4s ease-in-out infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.click-confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    z-index: 10;
+    animation: click-explosion 3s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes light-pulse {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes click-explosion {
+    0% { transform: scale(0) translate(0, 0); opacity: 1; }
+    100% { transform: scale(1) translate(var(--x, 100px), var(--y, 100px)); opacity: 0; }
+}
+
+/* تصميم محسن للكارت الأول مع الحفاظ على النص */
+.card-1 {
+  background-image: linear-gradient(163deg, #ff3d00 0%, #ff9e00 100%);
+  perspective: 1000px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  overflow: visible;
+  margin: 0 auto 30px auto; /* توسيط الكارت */
+  display: block;
+}
+
+.card-1:hover {
+  box-shadow: 0px 0px 30px 5px rgba(255, 61, 0, 0.40);
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.card-1:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 19px;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.card-front::before, .card-back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+}
+
+.card-front {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+/* كعكة عيد الميلاد محسنة ومتوسطة */
+.birthday-cake {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 30px auto; /* توسيط الكعكة */
+  transform-style: preserve-3d;
+  transform: perspective(500px) rotateX(10deg);
+}
+
+.cake-base {
+  position: absolute;
+  bottom: 0;
+  left: 0; /* ضبط الموضع */
+  right: 0; /* ضبط الموضع */
+  margin: 0 auto; /* توسيط */
+  width: 180px;
+  height: 60px;
+  background: linear-gradient(to right, #ff9e9e, #ff5252);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.cake-middle {
+  position: absolute;
+  bottom: 60px;
+  left: 0; /* ضبط الموضع */
+  right: 0; /* ضبط الموضع */
+  margin: 0 auto; /* توسيط */
+  width: 150px;
+  height: 50px;
+  background: linear-gradient(to right, #ffca80, #ff9e00);
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.cake-top {
+  position: absolute;
+  bottom: 110px;
+  left: 0; /* ضبط الموضع */
+  right: 0; /* ضبط الموضع */
+  margin: 0 auto; /* توسيط */
+  width: 120px;
+  height: 40px;
+  background: linear-gradient(to right, #ff80bf, #ff0066);
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.candle {
+  position: absolute;
+  bottom: 150px;
+  width: 12px;
+  height: 35px;
+  background: linear-gradient(to top, #ffffff, #e6e6e6);
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.candle:nth-child(4) {
+  left: calc(50% - 20px); /* توسيط الشمعة الأولى */
+}
+
+.candle:nth-child(5) {
+  left: calc(50% + 20px); /* توسيط الشمعة الثانية */
+}
+
+.flame {
+  position: absolute;
+  top: -25px;
+  left: -7px;
+  width: 26px;
+  height: 26px;
+  background: radial-gradient(circle, #ffdd00 0%, #ff9500 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  filter: blur(1px);
+  animation: flicker 1s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255, 221, 0, 0.8), 0 0 40px rgba(255, 149, 0, 0.4);
+}
+
+/* تحسين نص الواجهة الأمامية وتوسيطه */
+.front-text {
+  margin-top: 30px;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.front-text h2 {
+  color: #ffffff;
+  font-size: 60px;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  position: relative;
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+  margin: 0 auto; /* توسيط */
+}
+
+/* تحسين شارة العمر وتوسيطها */
+.age-badge {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #ff3d00 0%, #ff9e00 100%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 30px auto; /* توسيط */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.3);
+  animation: pulse 2s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.age-badge::before {
+  content: '';
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px dashed rgba(255,255,255,0.5);
+  animation: rotate 10s linear infinite;
+}
+
+.age-badge span {
+  font-size: 60px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* تحسين الرسالة وتوسيطها */
+.message {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.message h1 {
+  color: #ffffff;
+  font-size: 32px;
+  margin: 0 auto 15px auto; /* توسيط */
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  position: relative;
+  display: inline-block;
+}
+
+.message h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: linear-gradient(to right, #ff3d00, #ff9e00);
+}
+
+.message p {
+  color: #cccccc;
+  font-size: 22px;
+  margin: 20px auto 0 auto; /* توسيط */
+}
+
+/* تحسين الكونفيتي */
+.confetti-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* تحسين الأنيميشن */
+@keyframes flicker {
+  0% { transform: scale(1) rotate(-5deg); opacity: 0.8; }
+  25% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+  50% { transform: scale(0.9) rotate(-2deg); opacity: 0.9; }
+  75% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-5deg); opacity: 0.8; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* تأثير الكونفيتي عند النقر */
+.click-confetti {
+  position: absolute;
+  pointer-events: none;
+  animation: click-explosion 3s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes click-explosion {
+  0% { transform: scale(0) translate(0, 0); opacity: 1; }
+  100% { transform: scale(1) translate(var(--x, 100px), var(--y, 100px)); opacity: 0; }
+}
+
+/* تطبيق تأثير Uiverse.io على جميع الكاردات */
+.card {
+  width: 320px;
+  height: 420px;
+  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+  border-radius: 20px;
+  transition: all .3s;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+  animation: none; /* إيقاف الأنيميشن السابق */
+  transform: none; /* إعادة ضبط التحويل السابق */
+  box-shadow: none; /* إعادة ضبط الظل السابق */
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background-color: #1a1a1a;
+  border-radius: 19px;
+  transition: all .2s;
+  z-index: 0;
+}
+
+.card-top, .card-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+.card:hover {
+  box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+}
+
+.card:hover::after {
+  transform: scale(0.98);
+}
+
+/* تخصيص ألوان مختلفة لكل كارت */
+.card-1 {
+  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+}
+
+.card-2 {
+  background-image: linear-gradient(163deg, #ff7700 0%, #ff00d4 100%);
+}
+
+.card-2:hover {
+  box-shadow: 0px 0px 30px 1px rgba(255, 119, 0, 0.30);
+}
+
+.card-3 {
+  background-image: linear-gradient(163deg, #ffcc00 0%, #ff0055 100%);
+}
+
+.card-3:hover {
+  box-shadow: 0px 0px 30px 1px rgba(255, 204, 0, 0.30);
+}
+
+.card-4 {
+  background-image: linear-gradient(163deg, #00ccff 0%, #cc00ff 100%);
+}
+
+.card-4:hover {
+  box-shadow: 0px 0px 30px 1px rgba(0, 204, 255, 0.30);
+}
+
+.card-5 {
+  background-image: linear-gradient(163deg, #ff0055 0%, #0066ff 100%);
+}
+
+.card-5:hover {
+  box-shadow: 0px 0px 30px 1px rgba(255, 0, 85, 0.30);
+}
+
+
+
+
+
+
